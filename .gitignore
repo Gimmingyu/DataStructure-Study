@@ -50,3 +50,11 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
+# Custom
+.gitignore
+.DS_Store
+*/*.h.gch
+자료구조 학습자료/
+*/*.out
