@@ -19,6 +19,8 @@ void	deleteLinkedList(LinkedList *pList)
 	ListNode	*node;
 	ListNode	*next;
 
+	if (!pList)
+		return ;
 	node = &(pList->headerNode);
 	while (node)
 	{
