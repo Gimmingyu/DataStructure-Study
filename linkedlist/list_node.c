@@ -3,53 +3,85 @@
 int addLLElement(LinkedList *pList, int position, ListNode element)
 {
 	ListNode	*node;
+	ListNode	*prev;
 	int			idx;
 
-	if (!pList || !(&element) || position < 0)
+	if (position > pList->currentElementCount || position < 0 || !pList)
 	{
-		printf("Invalid Input\n");
+		printf("Invalied Input\n");
 		return (FALSE);
 	}
-	node = &(pList->headerNode);
+	node = malloc(sizeof(ListNode));
+	if (!node)
+	{
+		printf("malloc failed in addLLElement\n");
+		return (FALSE);
+	}
+	if (!(pList->currentElementCount))
+	{
+		pList->headerNode = element;
+		pList->currentElementCount++;
+		return (TRUE);
+	}
+	*node = element;
+	node->pLink = NULL;
+	prev = &(pList->headerNode);
 	idx = 0;
-	while (node->pLink && idx++ < position - 1)
-		node = node->pLink;
-	node->pLink = &element;
+	while (idx++ < position - 1)
+		prev = prev->pLink;
+	node->pLink = prev->pLink;
+	prev->pLink = node;
+	pList->currentElementCount++;
 	return (TRUE);
 }
 
 int removeLLElement(LinkedList *pList, int position)
 {
 	ListNode	*node;
-	ListNode	*nxt;
-	ListNode	*prev;
+	ListNode	*temp;
 	int			idx;
 
-	if (pList->currentElementCount < position || !pList)
+	if (!pList || pList->currentElementCount < position || position < 0)
 	{
 		printf("Invalid Input\n");
 		return (FALSE);
 	}
 	node = &(pList->headerNode);
 	idx = 0;
-	while (idx++ <= position && node)
+	while (idx++ < position -1 && node)
+		node = node->pLink;
+	if (!(node->pLink))
 	{
-		prev = node;
-		nxt = node->pLink;
-		node = nxt;
+		temp = node->pLink;
+		node->pLink = NULL;
+		free(temp);	
+		temp = NULL;
 	}
-	if (idx == position)
+	else
 	{
-		free(node);
-		node = NULL;
-		prev->pLink = nxt;
-		return (TRUE);
+		temp = node->pLink;
+		node->pLink = temp->pLink;
+		free(temp);
+		temp = NULL;
 	}
+	pList->currentElementCount--;
 	return (FALSE);
 }
 
-ListNode    *getLLelement(LinkedList *pList)
+ListNode	*getLLElement(LinkedList *pList, int position)
 {
+	int	idx;
+	ListNode	*node;
 
+	if (position > pList->currentElementCount || position < 0)
+	{
+		printf("Index out of range\n");
+		return (NULL);
+	}
+	node = &(pList->headerNode);
+	idx = 0;
+	while (idx++ <= position)
+		node = node->pLink;
+	printf("node->data = %d\n", node->data);
+	return (node);
 }
-

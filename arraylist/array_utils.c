@@ -19,6 +19,16 @@ void displayArrayList(ArrayList *pList)
 	size_t		idx;
 	size_t		size;
 
+	if (!pList)
+	{
+		printf("Invalid Input\n");
+		return ;
+	}
+	else if (pList->currentElementCount == 0)
+	{
+		printf("Empty List\n");
+		return ;
+	}
 	array = pList;
 	idx = 0;
 	size = array->currentElementCount - 1;

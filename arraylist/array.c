@@ -17,10 +17,16 @@ ArrayList	*createArrayList(int maxElementCount)
 	}
 	array->maxElementCount = maxElementCount;
 	array->currentElementCount = 0;
+	array->pElement = (ArrayListNode *)malloc(sizeof(ArrayListNode));
+	if (!array->pElement)
+	{
+		printf("malloc failed in createArrayList\n");
+		return (NULL);
+	}
 	return (array);
 }
 
-void deleteArrayList(ArrayList *pList)
+void	deleteArrayList(ArrayList *pList)
 {
 	clearArrayList(pList);
 	free(pList->pElement);
@@ -29,3 +35,13 @@ void deleteArrayList(ArrayList *pList)
 	pList = NULL;
 }
 
+void	setArray(ArrayList *pList)
+{
+	ArrayListNode	node;
+	int				i;
+
+	i = 0;
+	node.data = 0;
+	while (i < pList->maxElementCount)
+		(pList->pElement)[i++] = node;
+}

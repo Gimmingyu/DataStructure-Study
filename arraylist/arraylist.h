@@ -24,6 +24,7 @@ ArrayListNode* getALElement(ArrayList* pList, int position);
 void displayArrayList(ArrayList* pList);
 void clearArrayList(ArrayList* pList);
 int getArrayListLength(ArrayList* pList);
+void	setArray(ArrayList *pList);
 #endif
 #ifndef _COMMON_LIST_DEF_
 #define _COMMON_LIST_DEF_

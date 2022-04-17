@@ -2,91 +2,58 @@
 
 ArrayListNode	*getALElement(ArrayList *pList, int position)
 {
-	ArrayListNode	*temp;
-	size_t			p;
-
-	if (position < 0 || position >= pList->currentElementCount)
+	if (!pList || position < 0)
 	{
-		printf("Index out of range in getALElement\n");
-		return (FALSE);
+		printf("Invalid Input\n");
+		return (NULL);
 	}
-	p = (size_t)position;
-	temp = pList->pElement;
-	printf("pElement[%td] = %d\n", p, temp[p].data);
-	return (temp + p);
+	else if (position > pList->currentElementCount - 1)
+	{
+		printf("Empty node\n");
+		return (NULL);
+	}
+	return (&(pList->pElement)[position]);
 }
 
-int removeALElement(ArrayList *pList, int position)
+int	removeALElement(ArrayList *pList, int position)
 {
-	ArrayListNode	*pElem;
 	ArrayListNode	*temp;
-	size_t			idx;
-	size_t			size;
-	size_t			p;
+	int				i;
 
-	size = pList->currentElementCount - 1;
-	if (position >= (pList->maxElementCount) || position < 0)
+	if (!pList || position > pList->currentElementCount || position < 0)
 	{
-		printf("Index out of range in removeALElement\n");
+		printf("Invalid Input\n");
 		return (FALSE);
 	}
-	pElem = calloc(size, sizeof(ArrayListNode));
-	if (!(pElem))
-	{
-		printf("malloc failed in removeALElement\n");
-		return (FALSE);
-	}
-	idx = 0;
-	p = (size_t)position;
 	temp = pList->pElement;
-	while (temp && idx <= size)
+	i = (pList->currentElementCount) - 1;
+	while (position <= i)
 	{
-		if (idx == p)
-			temp++;
-		else
-			pElem[idx++] = *temp++;
+		temp[i] = temp[i + 1];
+		position++;
 	}
-	temp = NULL;
-	free(pList->pElement);
-	pList->pElement = pElem;
 	return (TRUE);
 }
 
 int	addALElement(ArrayList *pList, int position, ArrayListNode element)
 {
-	ArrayListNode	*pElem;
 	ArrayListNode	*temp;
-	size_t			idx;
-	size_t			size;
-	size_t			p;
+	int				i;
 
-	idx = 0;
-	size = pList->currentElementCount + 1;
-	if (position > (pList->maxElementCount) - 1 || 
-	(pList->currentElementCount) + 1 > (pList->maxElementCount) || 
-	position < 0)
+	if (!pList || isArrayListFull(pList) || position > pList->currentElementCount || \
+			position < 0)
 	{
-		printf("Index out of range in addALElement\n");
-		return (FALSE);
-	}
-	pElem = calloc(size, sizeof(ArrayListNode));
-	if (!(pElem))
-	{
-		printf("malloc failed in addALElement\n");
+		printf("Invalid Input\n");
 		return (FALSE);
 	}
 	temp = pList->pElement;
-	p = (size_t)position;
-	while (temp && idx <= size)
+	i = (pList->currentElementCount) - 1;
+	while (position < i)
 	{
-		if (idx == p)
-			pElem[idx++] = element;
-		else
-			pElem[idx++] = *temp++;
+		temp[i + 1] = temp[i];
+		i--;
 	}
-	temp = NULL;
-	free(pList->pElement);
-	pList->pElement = pElem;
-	pList->currentElementCount = size;
+	temp[position] = element;
+	pList->currentElementCount++;
 	return (TRUE);
 }

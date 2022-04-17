@@ -16,20 +16,9 @@ LinkedList	*createLinkedList()
 
 void	deleteLinkedList(LinkedList *pList)
 {
-	ListNode	*node;
-	ListNode	*next;
-
 	if (!pList)
 		return ;
-	node = &(pList->headerNode);
-	while (node)
-	{
-		next = &(node->pLink);
-		free(node);
-		node = next;
-	}
-	node = NULL;
-	next = NULL;
+	clearLinkedList(pList);
 	free(pList);
 	pList = NULL;
 }
