@@ -35,7 +35,7 @@ void displayArrayList(ArrayList *pList)
 	temp = array->pElement;
 	while (temp && idx <= size)
 	{
-		printf("node[%td] = %d\n", idx, temp++->data);
+		printf("Array[%td] = %d\n", idx, temp++->data);
 		idx++;
 	}
 	temp = NULL;

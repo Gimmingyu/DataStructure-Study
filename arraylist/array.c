@@ -9,20 +9,10 @@ ArrayList	*createArrayList(int maxElementCount)
 		printf("Invalid Input in createArrayList\n");
 		return (NULL);
 	}
-	array = malloc(sizeof(ArrayList));
-	if (!array)
-	{
-		printf("malloc failed in createArrayList\n");
-		return (NULL);
-	}
+	array = malloc(sizeof(ArrayList *));
 	array->maxElementCount = maxElementCount;
 	array->currentElementCount = 0;
 	array->pElement = (ArrayListNode *)malloc(sizeof(ArrayListNode));
-	if (!array->pElement)
-	{
-		printf("malloc failed in createArrayList\n");
-		return (NULL);
-	}
 	return (array);
 }
 
