@@ -6,33 +6,44 @@ int addLLElement(LinkedList *pList, int position, ListNode element)
 	ListNode	*prev;
 	int			idx;
 
+	// 예외처리
 	if (position > pList->currentElementCount || position < 0 || !pList)
 	{
 		printf("Invalied Input\n");
 		return (FALSE);
 	}
-	node = malloc(sizeof(ListNode));
-	if (!node)
+	else if (!(pList->currentElementCount)) // 빈 리스트일 때
 	{
-		printf("malloc failed in addLLElement\n");
-		return (FALSE);
+		pList->headerNode = element;
+		pList->headerNode.pLink = NULL;
+		pList->currentElementCount++;
+		return (TRUE);
 	}
-	if (!(pList->currentElementCount))
+	prev = &(pList->headerNode);
+	node = malloc(sizeof(ListNode));
+	*node = element;
+	node->pLink = NULL;
+	if (!position)
 	{
+		node->data = prev->data;
+		node->pLink = prev->pLink;
+		element.pLink = node;
 		pList->headerNode = element;
 		pList->currentElementCount++;
 		return (TRUE);
 	}
-	*node = element;
-	node->pLink = NULL;
-	prev = &(pList->headerNode);
 	idx = 0;
-	while (idx++ < position - 1)
+	while (idx++ < position - 1 && prev)
 		prev = prev->pLink;
-	node->pLink = prev->pLink;
-	prev->pLink = node;
-	pList->currentElementCount++;
-	return (TRUE);
+	if (idx == position)
+	{
+		if ((prev->pLink))
+			node->pLink = prev->pLink;
+		prev->pLink = node;
+		pList->currentElementCount++;
+		return (TRUE);
+	}
+	return (FALSE);
 }
 
 int removeLLElement(LinkedList *pList, int position)
@@ -41,30 +52,47 @@ int removeLLElement(LinkedList *pList, int position)
 	ListNode	*temp;
 	int			idx;
 
+	// 예외처리
 	if (!pList || pList->currentElementCount < position || position < 0)
 	{
 		printf("Invalid Input\n");
 		return (FALSE);
 	}
 	node = &(pList->headerNode);
-	idx = 0;
-	while (idx++ < position -1 && node)
-		node = node->pLink;
-	if (!(node->pLink))
+	if (!position)
 	{
-		temp = node->pLink;
-		node->pLink = NULL;
-		free(temp);	
-		temp = NULL;
+		if (!(node->pLink))
+		{
+			node->data = 0x00;
+			node = NULL;
+		}
+		else
+		{
+			temp = node->pLink;
+			pList->headerNode = *temp;
+			node->data = 0x00;
+			node->pLink = NULL;
+			free(node);
+			node = NULL;
+			temp = NULL;
+		}
+		pList->currentElementCount--;
+		return (TRUE);
 	}
-	else
+	idx = 0;
+	while (idx++ < position - 1 && node)
+		node = node->pLink;
+	if (idx == position && node)
 	{
 		temp = node->pLink;
 		node->pLink = temp->pLink;
+		temp->data = 0x00;
+		temp->pLink = NULL;
 		free(temp);
 		temp = NULL;
+		pList->currentElementCount--;
+		return (TRUE);
 	}
-	pList->currentElementCount--;
 	return (FALSE);
 }
 

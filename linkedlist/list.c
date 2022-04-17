@@ -5,12 +5,9 @@ LinkedList	*createLinkedList()
 	LinkedList	*linked_list;
 
 	linked_list = malloc(sizeof(LinkedList));
-	if (!linked_list)
-	{
-		printf("failed malloc in createLinkedList\n");
-		return (NULL);
-	}
 	linked_list->currentElementCount = 0;
+	linked_list->headerNode.data = 0;
+	linked_list->headerNode.pLink = NULL;
 	return (linked_list);
 }
 
