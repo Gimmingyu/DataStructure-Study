@@ -32,6 +32,7 @@ int	removeALElement(ArrayList *pList, int position)
 		temp[i] = temp[i + 1];
 		position++;
 	}
+	pList->currentElementCount--;
 	return (TRUE);
 }
 

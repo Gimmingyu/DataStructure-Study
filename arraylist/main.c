@@ -1,20 +1,34 @@
 #include "arraylist.h"
+#include <time.h>
 
 int	main(void)
 {
 	ArrayList		*array;
 	ArrayListNode	*elem;
+	clock_t	start, end;
 
-	array = createArrayList(10);
-	for (int i=0; i < 10; i++)
+
+	array = createArrayList(100000);
+	start = clock();
+	for (int i=0; i < 100000; i++)
 	{
-		printf("i = %d\n", i);
+		// printf("i = %d\n", i);
 		elem = malloc(sizeof(ArrayListNode));
 		elem->data = i;
 		addALElement(array, i, *elem);
 		free(elem);
-		displayArrayList(array);
+		// displayArrayList(array);
 	}
+	for (int i=99999; i > -1; i--)
+	{
+		printf("i = %d\n", i);
+		// getArrayListLength(array);
+		removeALElement(array, i);
+		// displayArrayList(array);
+	}
+	displayArrayList(array);
+	end = clock();
+	printf("[time : %f]\n", (float)(end - start)/CLOCKS_PER_SEC);
 	clearArrayList(array);
 	deleteArrayList(array);
 	array = NULL;

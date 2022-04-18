@@ -12,7 +12,7 @@ ArrayList	*createArrayList(int maxElementCount)
 	array = malloc(sizeof(ArrayList *));
 	array->maxElementCount = maxElementCount;
 	array->currentElementCount = 0;
-	array->pElement = (ArrayListNode *)malloc(sizeof(ArrayListNode));
+	array->pElement = malloc(sizeof(ArrayListNode));
 	return (array);
 }
 
