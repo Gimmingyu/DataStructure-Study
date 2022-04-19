@@ -21,8 +21,6 @@ int addLLElement(LinkedList *pList, int position, ListNode element)
 	}
 	prev = &(pList->headerNode);
 	node = malloc(sizeof(ListNode));
-	*node = element;
-	node->pLink = NULL;
 	if (!position)
 	{
 		node->data = prev->data;
@@ -32,6 +30,8 @@ int addLLElement(LinkedList *pList, int position, ListNode element)
 		pList->currentElementCount++;
 		return (TRUE);
 	}
+	*node = element;
+	node->pLink = NULL;
 	idx = 0;
 	while (idx++ < position - 1 && prev)
 		prev = prev->pLink;

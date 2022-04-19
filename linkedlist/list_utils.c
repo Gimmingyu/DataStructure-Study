@@ -23,7 +23,7 @@ void	displayLinkedList(LinkedList *pList)
 	ListNode	*node;
 	int			idx;
 
-	if (!pList)
+	if (!pList || !(pList->currentElementCount))
 		return ;
 	node = &(pList->headerNode);
 	idx = 0;
