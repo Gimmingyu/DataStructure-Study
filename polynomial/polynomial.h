@@ -22,15 +22,14 @@ typedef struct LinkedListType
 LinkedList* createPolynomialList();
 int addPLElement(LinkedList* pList, ListNode element);
 int	removePLElement(LinkedList *pList, int position);
-ListNode	*getLLElement(LinkedList* pList, int position);
+ListNode	*getPLElement(LinkedList* pList, int position);
 
 void	clearPolynomialList(LinkedList *pList);
-int getLinkedListLength(LinkedList* pList);
+int	getPolynomialListLength(LinkedList *pList);
 void	deletePolynomialList(LinkedList *pList);
-void	displayLinkedList(LinkedList *pList);
+void	displayPLLinkedList(LinkedList *pList);
 LinkedList	*plus(LinkedList *aList, LinkedList *bList);
 LinkedList	*minus(LinkedList *aList, LinkedList *bList);
-void	EXIT();
 #endif
 
 #ifndef _COMMON_LIST_DEF_
@@ -40,7 +39,7 @@ void	EXIT();
 #define FALSE	0
 #define ZERO(x) (x == 0 ? TRUE : FALSE)
 #define UPPER_ZERO(x) (x > 0 ? TRUE : FALSE)
-#define NULLCHECK(x) (!x ? EXIT() : x)
+#define NULLCHECK(x) (!x ? NULL : x)
 #define IS_BIG(x, y) (x < y ? TRUE : FALSE)
 #define IS_LOWER(x, y) (x > y ? TRUE : FALSE)
 #define IS_SAME(x, y) (x == y ? TRUE : FALSE)

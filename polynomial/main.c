@@ -43,7 +43,7 @@ int	main(void)
 	elem8->coef = 1;
 	addPLElement(lst2, *elem8);
 
-	elem->coef = 3;
+	elem->coef = -3;
 	elem->degree = 3;
 	addPLElement(lst2, *elem);
 
@@ -51,7 +51,7 @@ int	main(void)
 	elem2->degree = 4;
 	addPLElement(lst2, *elem2);
 
-	elem3->coef = 2;
+	elem3->coef = -2;
 	elem3->degree = 2;
 	addPLElement(lst2, *elem3);
 
@@ -64,20 +64,27 @@ int	main(void)
 	e7->coef = 1000;
 	addPLElement(lst2, *e7);
 	printf("================================================\n");
-	buf = lst->headerNode.pRLink;
-	for (int i = 0; i < lst->currentElementCount; i++)
-	{
-		printf("i : %d coef : %d degree : %d\n", i, buf->coef, buf->degree);
-		buf = buf->pRLink;
-	}
+	// buf = lst->headerNode.pRLink;
+	displayPLLinkedList(lst);
+	buf = getPLElement(lst, 0);
+	printf("buf = %dx^%d\n", buf->coef, buf->degree);
+	buf = getPLElement(lst2, 0);
+	printf("buf = %dx^%d\n", buf->coef, buf->degree);
+	printf("================================================\n");
+	displayPLLinkedList(lst2);
+	// for (int i = 0; i < lst->currentElementCount; i++)
+	// {
+	// 	printf("i : %d coef : %d degree : %d\n", i, buf->coef, buf->degree);
+	// 	buf = buf->pRLink;
+	// }
 	printf("================================================\n");
 	// removePLElement(lst2, 4);
-	buf = lst2->headerNode.pRLink;
-	for (int i = 0; i < lst2->currentElementCount; i++)
-	{
-		printf("i : %d coef : %d degree : %d\n", i, buf->coef, buf->degree);
-		buf = buf->pRLink;
-	}
+	// buf = lst2->headerNode.pRLink;
+	// for (int i = 0; i < lst2->currentElementCount; i++)
+	// {
+	// 	printf("i : %d coef : %d degree : %d\n", i, buf->coef, buf->degree);
+	// 	buf = buf->pRLink;
+	// }
 	printf("================================================\n");
 	LinkedList *lst3 = minus(lst, lst2);
 	buf = lst3->headerNode.pRLink;
