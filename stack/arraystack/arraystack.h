@@ -8,14 +8,13 @@
 typedef struct StackNodeType
 {
 	char data;
-	struct StackNodeType	*pLink;
 } StackNode;
 
 typedef struct ArrayStackType
 {
 	int currentElementCount;
 	int	maxElementCount;
-	StackNode	*pTopElement;
+	StackNode	*pElement;
 } ArrayStack;
 
 void 		deleteArrayStack(ArrayStack* pStack);

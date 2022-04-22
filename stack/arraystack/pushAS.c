@@ -1,20 +1,15 @@
 #include "arraystack.h"
 
-int 		pushAS(ArrayStack *pStack, StackNode element)
+int	pushAS(ArrayStack *pStack, StackNode element)
 {
-	StackNode	*newNode = calloc(1, sizeof(StackNode));
+	StackNode	*stack;
+	int			i = 0;
 
 	NULLCHECK(pStack);
-	NULLCHECK(newNode);
 	if (isArrayStackFull(pStack))
-	{
-		free(newNode);
-		newNode = NULL;
 		return (FALSE);
-	}
-	newNode->data = element.data;
-	newNode->pLink = pStack->pTopElement;
-	pStack->pTopElement = newNode;
+	stack = pStack->pElement;
+	stack[pStack->currentElementCount].data = element.data;
 	pStack->currentElementCount++;
 	return (TRUE);
 }

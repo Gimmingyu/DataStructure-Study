@@ -6,6 +6,8 @@ ArrayStack	*createArrayStack(int maxElementCount)
 
 	array = calloc(1, sizeof(ArrayStack));
 	NULLCHECK(array);
+	array->pElement = calloc(maxElementCount, sizeof(StackNode));
+	NULLCHECK(array->pElement);
 	array->maxElementCount = maxElementCount;
 	return (array);
 }

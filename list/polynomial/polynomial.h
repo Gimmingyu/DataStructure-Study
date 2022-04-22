@@ -1,14 +1,13 @@
-#ifndef _LINKEDLIST_
-#define _LINKEDLIST_
-
+#ifndef _POLYNOIMIAL_
+#define _POLYNOIMIAL_
 
 #include <stdlib.h>
 #include <stdio.h>
 
 typedef struct ListNodeType
 {
-	int coef; // 계수
-	int	degree; // 차수 
+	int coef;
+	int	degree;
 	struct ListNodeType *pLLink;
 	struct ListNodeType *pRLink;
 } ListNode;
@@ -19,22 +18,22 @@ typedef struct LinkedListType
 	ListNode headerNode;		// 헤더 노드(Header Node)
 } LinkedList;
 
-LinkedList* createPolynomialList();
-void		deletePolynomialList(LinkedList *pList);
+LinkedList	*createPolynomialList();
+ListNode	*getPLElement(LinkedList* pList, int position);
 void		clearPolynomialList(LinkedList *pList);
+void		deletePolynomialList(LinkedList *pList);
+
+int			addPLElement(LinkedList* pList, ListNode element);
+int			removePLElement(LinkedList *pList, int position);
+int			getPolynomialListLength(LinkedList *pList);
 
 LinkedList	*plus(LinkedList *aList, LinkedList *bList);
 LinkedList	*minus(LinkedList *aList, LinkedList *bList);
-void		alloc_calc_node(LinkedList *new_list, LinkedList *base_list, int flag);
+LinkedList	*multiply(LinkedList *aList, LinkedList *bList);
+LinkedList	*division(LinkedList *aList, LinkedList *bList);
 
-
-int 		addPLElement(LinkedList* pList, ListNode element);
-int			removePLElement(LinkedList *pList, int position);
-
-ListNode	*getPLElement(LinkedList* pList, int position);
-int			getPolynomialListLength(LinkedList *pList);
 void		displayPLLinkedList(LinkedList *pList);
-
+void		alloc_calc_node(LinkedList *new_list, LinkedList *base_list, int flag);
 #endif
 
 #ifndef _COMMON_LIST_DEF_

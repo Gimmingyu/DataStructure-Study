@@ -10,7 +10,8 @@ int	main(void)
 	StackNode	*node5 = calloc(1, sizeof(StackNode));
 	StackNode	*node6 = calloc(1, sizeof(StackNode));
 	StackNode	*node7 = calloc(1, sizeof(StackNode));
-
+	StackNode	*temp;
+	
 	node1->data = 'm';
 	node2->data = 'i';
 	node3->data = 'n';
@@ -50,47 +51,86 @@ int	main(void)
 	printf("***********now peek & pop*****************\n");
 	printf("***********now peek & pop*****************\n");
 
-	printf("peek : %c\n", peekAS(stack)->data);
-	popAS(stack);
+	temp = peekAS(stack);
+	printf("peek : %c\n", temp->data);
+	free(temp);
+	temp = popAS(stack);
+	free(temp);
 	displayArrayStack(stack);
 	printf("====================================================\n");
 
-	printf("peek : %c\n", peekAS(stack)->data);
-	popAS(stack);
+	temp = peekAS(stack);
+	printf("peek : %c\n", temp->data);
+	free(temp);
+	temp = popAS(stack);
+	free(temp);
 	displayArrayStack(stack);
 	printf("====================================================\n");
 
-	printf("peek : %c\n", peekAS(stack)->data);
-	popAS(stack);
+	temp = peekAS(stack);
+	printf("peek : %c\n", temp->data);
+	free(temp);
+	temp = popAS(stack);
+	free(temp);
 	displayArrayStack(stack);
 	printf("====================================================\n");
 
-	printf("peek : %c\n", peekAS(stack)->data);
-	popAS(stack);
+	temp = peekAS(stack);
+	printf("peek : %c\n", temp->data);
+	free(temp);
+	temp = popAS(stack);
+	free(temp);
 	displayArrayStack(stack);
 	printf("====================================================\n");
 
-	printf("peek : %c\n", peekAS(stack)->data);
-	popAS(stack);
+	temp = peekAS(stack);
+	printf("peek : %c\n", temp->data);
+	free(temp);
+	temp = popAS(stack);
+	free(temp);
 	displayArrayStack(stack);
 	printf("====================================================\n");
 
-	printf("peek : %c\n", peekAS(stack)->data);
-	popAS(stack);
+	temp = peekAS(stack);
+	printf("peek : %c\n", temp->data);
+	free(temp);
+	temp = popAS(stack);
+	free(temp);
 	displayArrayStack(stack);
 	printf("====================================================\n");
 
-	printf("peek : %c\n", peekAS(stack)->data);
-	popAS(stack);
+	temp = peekAS(stack);
+	printf("peek : %c\n", temp->data);
+	free(temp);
+	temp = popAS(stack);
+	free(temp);
 	displayArrayStack(stack);
 	printf("====================================================\n");
 
-	// printf("peek : %c\n", peekAS(stack)->data);
-	// popAS(stack);
+	// temp = peekAS(stack);
+	// printf("peek : %c\n", temp->data);
+	// free(temp);
+	// temp = popAS(stack);
+	// free(temp);
+	temp = NULL;
 	displayArrayStack(stack);
 	printf("====================================================\n");
 
 	deleteArrayStack(stack);
+	// node1->data = 0;
+	// node2->data = 0;
+	// node3->data = 0;
+	// node4->data = 0;
+	// node5->data = 0;
+	// node6->data = 0;
+	// node7->data = 0;
+	// free(node1);
+	// free(node2);
+	// free(node3);
+	// free(node4);
+	// free(node5);
+	// free(node6);
+	// free(node7);
 	// printf("Is stack empty ? : %d\n", isLinkedStackEmpty(stack));
 	system("leaks a.out > leaks_result; cat leaks_result | \
         grep leaked && rm -rf leaks_result");

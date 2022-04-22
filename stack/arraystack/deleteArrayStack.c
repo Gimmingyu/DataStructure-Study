@@ -1,36 +1,16 @@
 #include "arraystack.h"
 
-void 		deleteArrayStack(ArrayStack *pStack)
+void	deleteArrayStack(ArrayStack *pStack)
 {
-	int			idx;
-	StackNode	*delNode;
-	StackNode	*nextNode;
+	StackNode	*bottomNode;
+	int	idx = 0;
 
 	NULLCHECK(pStack);
-	if (isArrayStackEmpty(pStack))
-	{
-		pStack->pTopElement = NULL;
-		free(pStack);
-		pStack = NULL;
-	}
-	else
-	{
-		idx = pStack->currentElementCount;
-		delNode = pStack->pTopElement;
-		while (idx-- && delNode)
-		{
-			nextNode = delNode->pLink;
-			delNode->pLink = NULL;
-			delNode->data = 0x00;
-			free(delNode);
-			delNode = nextNode;
-		}
-		pStack->pTopElement = NULL;
-		free(delNode);
-		free(pStack);
-		free(nextNode);
-		nextNode = NULL;
-		delNode = NULL;
-		pStack = NULL;
-	}
+	bottomNode = pStack->pElement;
+	while (idx < pStack->maxElementCount)
+		bottomNode[idx++].data = 0;
+	free(pStack->pElement);
+	pStack->pElement = NULL;
+	free(pStack);
+	pStack = NULL;
 }
