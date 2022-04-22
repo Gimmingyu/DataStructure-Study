@@ -59,17 +59,14 @@
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F80fBj%2Fbtrz3kJsm7r%2FJnjgrIMyeRrV6h01fNHc90%2Fimg.png" />
 
 원형 연결 리스트는 일반적인 연결 리스트에 마지막 노드와 처음 노드를 연결시켜 원형으로 만든 구조이다.  
-단일 연결 리스트와 동일한 특징을 갖지만, 가장 첫 노드와 끝 노드가 연결된다는 특징을 갖는다.  
-단, header는 tail과 동일하여 list의 0번째 node는 header의 다음 node가 된다.
+
 
 <br />
 
 ## 특징
 
--   노드를 탐색하면서 순회에 용이하다.
--   반복적인 순회에서 끝을 확인해야할 필요가 없음.
--	header 다음 node가 0번째 node가 된다.
--   이외에는 단일 연결리스트와 동일하다.
+-   head와 tail이 연결되어 있어서 탐색할 때 편하다.
+-   head와 tail의 상태가 바뀔 때를 고려해야 한다.
 
 ## CircularList
 
@@ -98,9 +95,7 @@
 
 -   탐색에 용이하다.
 -   자료구조의 크기가 증가한다.
--   메모리 사용량이 증가한다.
--   단일 연결 리스트보다 관리에 유의해야 한다.
--   이 외에는 단일 연결 리스트와 비슷한다.
+-   단일 연결 리스트보다 메모리 관리가 어렵다.
 
 ## DoublyList
 
