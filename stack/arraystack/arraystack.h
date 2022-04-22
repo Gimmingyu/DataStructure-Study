@@ -1,5 +1,6 @@
-#ifndef _ARRAY_STACK_
-#define _ARRAY_STACK_
+#ifndef _LINKED_STACK_
+#define _LINKED_STACK_
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,23 +11,25 @@ typedef struct StackNodeType
 	struct StackNodeType	*pLink;
 } StackNode;
 
-typedef struct LinkedStackType
+typedef struct ArrayStackType
 {
 	int currentElementCount;
+	int	maxElementCount;
 	StackNode	*pTopElement;
-} LinkedStack;
+} ArrayStack;
 
-void 		deleteLinkedStack(LinkedStack* pStack);
-LinkedStack	*createLinkedStack();
+void 		deleteArrayStack(ArrayStack* pStack);
+ArrayStack	*createArrayStack(int maxElementCount);
 
-StackNode	*peekLS(LinkedStack* pStack);
-StackNode	*popLS(LinkedStack* pStack);
-int 		pushLS(LinkedStack* pStack, StackNode element);
+StackNode	*peekAS(ArrayStack *pStack);
+StackNode	*popAS(ArrayStack *pStack);
+int 		pushAS(ArrayStack *pStack, StackNode element);
 
-int 		isLinkedStackEmpty(LinkedStack* pStack);
+int 		isArrayStackFull(ArrayStack* pStack);
+int 		isArrayStackEmpty(ArrayStack* pStack);
 
 // additional
-void		displayLinkedStack(LinkedStack *pStack);
+void		displayArrayStack(ArrayStack *pStack);
 void		NULLCHECK(void *ptr);
 int			SAME(int x, int y);
 int			ZERO(int x);
