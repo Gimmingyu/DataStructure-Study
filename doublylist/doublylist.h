@@ -18,7 +18,7 @@ typedef struct DoublyListNodeType
 
 typedef struct DoublyListType
 {
-	int	currentElementCount;	
+	int	currentElementCount;
 	DoublyListNode	headerNode;
 }	DoublyList;
 

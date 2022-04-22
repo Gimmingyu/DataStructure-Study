@@ -7,8 +7,8 @@
 
 typedef struct ListNodeType
 {
-	int coef;
-	int	degree;
+	int coef; // 계수
+	int	degree; // 차수 
 	struct ListNodeType *pLLink;
 	struct ListNodeType *pRLink;
 } ListNode;
@@ -20,16 +20,21 @@ typedef struct LinkedListType
 } LinkedList;
 
 LinkedList* createPolynomialList();
-int addPLElement(LinkedList* pList, ListNode element);
-int	removePLElement(LinkedList *pList, int position);
-ListNode	*getPLElement(LinkedList* pList, int position);
+void		deletePolynomialList(LinkedList *pList);
+void		clearPolynomialList(LinkedList *pList);
 
-void	clearPolynomialList(LinkedList *pList);
-int	getPolynomialListLength(LinkedList *pList);
-void	deletePolynomialList(LinkedList *pList);
-void	displayPLLinkedList(LinkedList *pList);
 LinkedList	*plus(LinkedList *aList, LinkedList *bList);
 LinkedList	*minus(LinkedList *aList, LinkedList *bList);
+void		alloc_calc_node(LinkedList *new_list, LinkedList *base_list, int flag);
+
+
+int 		addPLElement(LinkedList* pList, ListNode element);
+int			removePLElement(LinkedList *pList, int position);
+
+ListNode	*getPLElement(LinkedList* pList, int position);
+int			getPolynomialListLength(LinkedList *pList);
+void		displayPLLinkedList(LinkedList *pList);
+
 #endif
 
 #ifndef _COMMON_LIST_DEF_

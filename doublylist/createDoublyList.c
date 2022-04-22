@@ -4,7 +4,7 @@ DoublyList	*createDoublyList()
 {
 	DoublyList	*buf;
 
-	buf = (DoublyList *)calloc(1, sizeof(DoublyList));
+	buf = calloc(1, sizeof(DoublyList));
 	NULLCHECK(buf);
 	return (buf);
 }

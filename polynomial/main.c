@@ -35,8 +35,9 @@ int	main(void)
 	elem5->degree = 5;
 	elem5->coef = 1000;
 	addPLElement(lst, *elem5);
-
-
+	printf("================================================\n");
+	displayPLLinkedList(lst);
+	printf("================================================\n");
 	LinkedList *lst2 = createPolynomialList();
 	ListNode	*elem8 = malloc(sizeof(ListNode));
 	elem8->degree = 1;
@@ -67,9 +68,9 @@ int	main(void)
 	// buf = lst->headerNode.pRLink;
 	displayPLLinkedList(lst);
 	buf = getPLElement(lst, 0);
-	printf("buf = %dx^%d\n", buf->coef, buf->degree);
+	// printf("buf = %dx^%d\n", buf->coef, buf->degree);
 	buf = getPLElement(lst2, 0);
-	printf("buf = %dx^%d\n", buf->coef, buf->degree);
+	// printf("buf = %dx^%d\n", buf->coef, buf->degree);
 	printf("================================================\n");
 	displayPLLinkedList(lst2);
 	// for (int i = 0; i < lst->currentElementCount; i++)
@@ -86,7 +87,10 @@ int	main(void)
 	// 	buf = buf->pRLink;
 	// }
 	printf("================================================\n");
-	LinkedList *lst3 = minus(lst, lst2);
+	LinkedList *lst3 = plus(lst, lst2);
+	printf("lst3\n");
+	displayPLLinkedList(lst3);
+	printf("================================================\n");
 	buf = lst3->headerNode.pRLink;
 	for (int i = 0; i < lst3->currentElementCount; i++)
 	{
