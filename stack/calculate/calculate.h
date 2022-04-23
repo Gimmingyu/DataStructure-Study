@@ -5,37 +5,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef	enum e_flag 
+typedef	enum e_operator 
 {
 	MULTIPLY = '*',
 	DIVIDE = '/',
 	PLUS = '+',
 	MINUS = '-',
-	INT = 'i',
-} t_flag;
+} t_operator;
+
+typedef	enum e_bracket 
+{
+	SMALL_LEFT = '(',
+	SMALL_RIGHT = ')',
+	MIDDLE_LEFT = '{',
+	MIDDLE_RIGHT = '}',
+	BIG_LEFT = '[',
+	BIG_RIGHT = ']',
+} t_bracket;
+
+typedef struct StackNodeType
+{
+	size_t					size;
+	int						data;
+	struct StackNodeType	*Link;
+} Node;
 
 typedef struct FormulaType
 {
-	int					data;
-	t_flag				flag;
-	struct FormulaType	*Link;
+	int			currentStackCount;
+	Node	*topNode;
 } Formula;
 
-typedef	struct StackType
-{
-	int				currentElementCount;
-	struct Formula	*topNode;
-} Stack;
+Formula	*createStack();
+Formula *copyFormula(Formula *Stack);
 
-Stack	*createStack();
+int		verifyType(Node elem);
+int		isFormulaEmpty(Formula *Stack);
+int		calcFormula(Formula *Stack);
 
-t_flag	verify_element(Formula element);
-
-int		addElement(Stack pStack, Formula element);
+int		addNodeinFormula(Formula *Stack, Node elem);
+Node	*peekNodeinFormula(Formula *Stack);
+Node	*combineNodeByOper(Formula *Stack);
+void	deleteFormula(Formula *Stack);
 // additional
-void		NULLCHECK(void *ptr);
-int			SAME(int x, int y);
-int			ZERO(int x);
+int		NULLCHECK(void *ptr);
+int		SAME(int x, int y);
+int		ZERO(int x);
 #endif
 
 #ifndef _COMMON_STACK_DEF_
@@ -43,4 +58,7 @@ int			ZERO(int x);
 
 #define TRUE		1
 #define FALSE		0
+#define ERROR		-1
+#define CHARSIZE	1
+#define INTSIZE		4
 #endif
