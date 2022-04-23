@@ -2,9 +2,13 @@
 
 void	displayArrayStack(ArrayStack *pStack)
 {
-	int	idx = pStack->currentElementCount;
-	StackNode	*topNode = pStack->pElement;
+	int	idx;
+	StackNode	*topNode;
 
+	if (NULLCHECK(pStack))
+		return ;
+	idx = pStack->currentElementCount;
+	topNode = pStack->pElement;
 	while (idx-- && topNode)
 		printf("topNode->data = '%c'\n", topNode[idx].data);
 }

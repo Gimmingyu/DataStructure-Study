@@ -1,29 +1,29 @@
 #include "bracket.h"
 
-void	NULLCHECK(void *ptr)
+int	NULLCHECK(void *ptr)
 {
 	if (!ptr)
 	{
 		printf("null pointer exception\n");
-		system("leaks a.out > leaks_result; cat leaks_result | \
-        grep leaked && rm -rf leaks_result");
-		exit(1);
+		return (TRUE);
 	}
-	return ;
+	return (FALSE);
 }
 
-Stack	*createStack()
+BracketStack	*createBracketStack()
 {
-	Stack	*newStack = calloc(1, sizeof(Stack));
+	BracketStack	*newBracketStack = calloc(1, sizeof(BracketStack));
 
-	NULLCHECK(newStack);
-	return (newStack);
+	if (NULLCHECK(newBracketStack))
+		return (NULL);
+	return (newBracketStack);
 }
 
-int		isStackEmpty(Stack *pStack)
+int		isBracketStackEmpty(BracketStack *pBracketStack)
 {
-	NULLCHECK(pStack);
-	return (pStack->currentElementCount == 0 ? TRUE : FALSE);
+	if (NULLCHECK(pBracketStack))
+		return (ERROR);
+	return (pBracketStack->currentElementCount == 0 ? TRUE : FALSE);
 }
 
 t_type	verify_type(Bracket bracket)
@@ -48,36 +48,38 @@ t_type	verify_type(Bracket bracket)
 	else
 	{
 		printf("Invalid Input\n");
-		exit(1);
+		return (ERROR);
 	}
 	return (bracket.type);
 }
 
-int	find_bracket_pair(Stack *pStack, t_type type)
+int	find_bracket_pair(BracketStack *pBracketStack, t_type type)
 {
-	if (!pStack->topNode)
+	if (!pBracketStack->topNode)
 		return (FALSE);
-	return (pStack->topNode->type == type ? TRUE : FALSE);
+	return (pBracketStack->topNode->type == type ? TRUE : FALSE);
 }
 
-int	pushBracket(Stack *pStack, Bracket bracket)
+int	pushBracket(BracketStack *pBracketStack, Bracket bracket)
 {
 	t_type	type;
 	Bracket	*topNode;
 	Bracket	*newNode;
 
-	NULLCHECK(pStack);
+	if (NULLCHECK(pBracketStack))
+		return (ERROR);
 	// type이 괄호가 아니라면 exit
-	type = verify_type(bracket);
+	if ((type = verify_type(bracket)) == ERROR)
+		return (ERROR);
 	// 맨 위에 있던 괄호와 일치하는 경우 
-	if (find_bracket_pair(pStack, type))
+	if (find_bracket_pair(pBracketStack, type))
 	{
 		// 맨위의 노드를 지우고 return True
-		topNode = pStack->topNode;
-		pStack->topNode = topNode->Link;
+		topNode = pBracketStack->topNode;
+		pBracketStack->topNode = topNode->Link;
 		free(topNode);
 		topNode = NULL;
-		pStack->currentElementCount--;
+		pBracketStack->currentElementCount--;
 	}
 	else
 	{
@@ -85,60 +87,63 @@ int	pushBracket(Stack *pStack, Bracket bracket)
 		newNode = calloc(1, sizeof(Bracket));
 		NULLCHECK(newNode);
 		newNode->type = bracket.type;
-		newNode->Link = pStack->topNode;
-		pStack->topNode = newNode;
-		pStack->currentElementCount++;
+		newNode->Link = pBracketStack->topNode;
+		pBracketStack->topNode = newNode;
+		pBracketStack->currentElementCount++;
 	}
 	return (TRUE);
 }
 
-Bracket	*peekBracket(Stack *pStack)
+Bracket	*peekBracket(BracketStack *pBracketStack)
 {
-	NULLCHECK(pStack);
-	if (isStackEmpty(pStack))
+	if (NULLCHECK(pBracketStack))
+		return (NULL);
+	if (isBracketStackEmpty(pBracketStack))
 	{
-		printf("STACK IS NOW EMPTY\n");
+		printf("BracketStack IS NOW EMPTY\n");
 		return (NULL);
 	}
-	return (pStack->topNode);
+	return (pBracketStack->topNode);
 }
 
-Bracket	*popBracket(Stack *pStack)
+Bracket	*popBracket(BracketStack *pBracketStack)
 {
 	Bracket	*popNode;
 	Bracket	*delNode;
 
-	NULLCHECK(pStack);
+	if (NULLCHECK(pBracketStack))
+		return (NULL);
 	// is empty
-	if (isStackEmpty(pStack))
+	if (isBracketStackEmpty(pBracketStack))
 		return (NULL);
 	popNode = calloc(1, sizeof(Bracket));
-	NULLCHECK(popNode);
-	delNode = pStack->topNode;
-	if (pStack->currentElementCount == 1)
+	if (NULLCHECK(popNode))
+		return (NULL);
+	delNode = pBracketStack->topNode;
+	if (pBracketStack->currentElementCount == 1)
 	{
 		popNode->type = delNode->type;
 		popNode->Link = delNode->Link;
 		free(delNode);
 		delNode = NULL;
-		pStack->topNode = NULL;
+		pBracketStack->topNode = NULL;
 	}
 	else
 	{
 		popNode->type = delNode->type;
 		popNode->Link = delNode->Link;
-		pStack->topNode = delNode->Link;
+		pBracketStack->topNode = delNode->Link;
 		free(delNode);
 		delNode = NULL;
 	}
-	pStack->currentElementCount--;
+	pBracketStack->currentElementCount--;
 	return (popNode);
 }
 
-void	displayStack(Stack *pStack)
+void	displayBracketStack(BracketStack *pBracketStack)
 {
-	int		idx = pStack->currentElementCount;
-	Bracket	*topNode = pStack->topNode;
+	int		idx = pBracketStack->currentElementCount;
+	Bracket	*topNode = pBracketStack->topNode;
 
 	while (idx-- && topNode)
 	{
@@ -147,44 +152,32 @@ void	displayStack(Stack *pStack)
 	}
 }
 
-void	deleteStack(Stack *pStack)
+void	deleteBracketStack(BracketStack *pBracketStack)
 {
 	int			idx;
 	Bracket		*delNode;
 	Bracket		*nextNode;
 
-	NULLCHECK(pStack);
-	if (isStackEmpty(pStack))
+	if (NULLCHECK(pBracketStack))
+		return ;
+
+	idx = pBracketStack->currentElementCount;
+	delNode = pBracketStack->topNode;
+	while (idx-- && delNode)
 	{
-		pStack->topNode = NULL;
-		free(pStack);
-		pStack = NULL;
-	}
-	else
-	{
-		idx = pStack->currentElementCount;
-		delNode = pStack->topNode;
-		while (idx-- && delNode)
-		{
-			nextNode = delNode->Link;
-			delNode->Link = NULL;
-			delNode->type = 0x00;
-			free(delNode);
-			delNode = nextNode;
-		}
-		pStack->topNode = NULL;
+		nextNode = delNode->Link;
+		delNode->Link = NULL;
+		delNode->type = 0x00;
 		free(delNode);
-		free(pStack);
-		free(nextNode);
-		nextNode = NULL;
-		delNode = NULL;
-		pStack = NULL;
+		delNode = nextNode;
 	}
+	pBracketStack->topNode = NULL;
+	free(pBracketStack);
 }
 
 int	main(void)
 {
-	Stack	*stack = createStack();
+	BracketStack	*BracketStack = createBracketStack();
 	Bracket	*node1 = calloc(1, sizeof(Bracket));
 	Bracket	*node2 = calloc(1, sizeof(Bracket));
 	Bracket	*node3 = calloc(1, sizeof(Bracket));
@@ -195,36 +188,36 @@ int	main(void)
 
 	node1->type = '(';
 	node2->type = '[';
-	node3->type = '[';
-	node4->type = ']';
-	node5->type = '}';
+	node3->type = '{';
+	node4->type = '}';
+	node5->type = ']';
 	node6->type = ')';
-	pushBracket(stack, *node1);
-	displayStack(stack);
+	pushBracket(BracketStack, *node1);
+	displayBracketStack(BracketStack);
 	printf("====================================================\n");
 
-	pushBracket(stack, *node2);
-	displayStack(stack);
+	pushBracket(BracketStack, *node2);
+	displayBracketStack(BracketStack);
 	printf("====================================================\n");
 
-	pushBracket(stack, *node3);
-	displayStack(stack);
+	pushBracket(BracketStack, *node3);
+	displayBracketStack(BracketStack);
 	printf("====================================================\n");
 
-	pushBracket(stack, *node4);
-	displayStack(stack);
+	pushBracket(BracketStack, *node4);
+	displayBracketStack(BracketStack);
 	printf("====================================================\n");
 
-	pushBracket(stack, *node5);
-	displayStack(stack);
+	pushBracket(BracketStack, *node5);
+	displayBracketStack(BracketStack);
 	printf("====================================================\n");
 
-	pushBracket(stack, *node6);
-	displayStack(stack);
+	pushBracket(BracketStack, *node6);
+	displayBracketStack(BracketStack);
 	printf("====================================================\n");
 
-	// pushBracket(stack, *node7);
-	// displayStack(stack);
+	// pushBracket(BracketStack, *node7);
+	// displayBracketStack(BracketStack);
 	// printf("====================================================\n");
 
 	printf("***********now peek & pop*****************\n");
@@ -232,56 +225,56 @@ int	main(void)
 	printf("***********now peek & pop*****************\n");
 
 	// Bracket	*temp;
-	// temp = peekBracket(stack);
+	// temp = peekBracket(BracketStack);
 	// printf("peek : %c\n", temp->type);
-	// temp = popBracket(stack);
+	// temp = popBracket(BracketStack);
 	// free(temp);
-	// displayStack(stack);
+	// displayBracketStack(BracketStack);
 	// printf("====================================================\n");
 	
-	// temp = peekBracket(stack);
+	// temp = peekBracket(BracketStack);
 	// printf("peek : %c\n", temp->type);
-	// temp = popBracket(stack);
+	// temp = popBracket(BracketStack);
 	// free(temp);
-	// displayStack(stack);
+	// displayBracketStack(BracketStack);
 	// printf("====================================================\n");
 
-	// temp = peekBracket(stack);
+	// temp = peekBracket(BracketStack);
 	// printf("peek : %c\n", temp->type);
-	// temp = popBracket(stack);
+	// temp = popBracket(BracketStack);
 	// free(temp);
-	// displayStack(stack);
+	// displayBracketStack(BracketStack);
 	// printf("====================================================\n");
-	// temp = peekBracket(stack);
+	// temp = peekBracket(BracketStack);
 	// printf("peek : %c\n", temp->type);
-	// temp = popBracket(stack);
+	// temp = popBracket(BracketStack);
 	// free(temp);
-	// displayStack(stack);
+	// displayBracketStack(BracketStack);
 	// printf("====================================================\n");
-	// temp = peekBracket(stack);
+	// temp = peekBracket(BracketStack);
 	// printf("peek : %c\n", temp->type);
-	// temp = popBracket(stack);
+	// temp = popBracket(BracketStack);
 	// free(temp);
-	// displayStack(stack);
+	// displayBracketStack(BracketStack);
 	// printf("====================================================\n");
-	// temp = peekBracket(stack);
+	// temp = peekBracket(BracketStack);
 	// printf("peek : %c\n", temp->type);
-	// temp = popBracket(stack);
+	// temp = popBracket(BracketStack);
 	// free(temp);
-	// displayStack(stack);
+	// displayBracketStack(BracketStack);
 	// printf("====================================================\n");
-	// temp = peekBracket(stack);
+	// temp = peekBracket(BracketStack);
 	// printf("peek : %c\n", temp->type);
-	// temp = popBracket(stack);
+	// temp = popBracket(BracketStack);
 	// free(temp);
-	// displayStack(stack);
+	// displayBracketStack(BracketStack);
 	// printf("====================================================\n");
-	// temp = peekBracket(stack);
+	// temp = peekBracket(BracketStack);
 	// printf("peek : %c\n", temp->type);
-	// temp = popBracket(stack);
-	// displayStack(stack);
+	// temp = popBracket(BracketStack);
+	// displayBracketStack(BracketStack);
 	printf("====================================================\n");
-	deleteStack(stack);
+	deleteBracketStack(BracketStack);
 	system("leaks a.out > leaks_result; cat leaks_result | \
         grep leaked && rm -rf leaks_result");
 	return (0);

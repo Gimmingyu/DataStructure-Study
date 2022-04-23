@@ -6,31 +6,15 @@ void 		deleteLinkedStack(LinkedStack *pStack)
 	StackNode	*delNode;
 	StackNode	*nextNode;
 
-	NULLCHECK(pStack);
-	if (isLinkedStackEmpty(pStack))
+	if (NULLCHECK(pStack))
+		return ;
+	idx = pStack->currentElementCount;
+	delNode = pStack->pTopElement;
+	while (idx-- && delNode)
 	{
-		pStack->pTopElement = NULL;
-		free(pStack);
-		pStack = NULL;
-	}
-	else
-	{
-		idx = pStack->currentElementCount;
-		delNode = pStack->pTopElement;
-		while (idx-- && delNode)
-		{
-			nextNode = delNode->pLink;
-			delNode->pLink = NULL;
-			delNode->data = 0x00;
-			free(delNode);
-			delNode = nextNode;
-		}
-		pStack->pTopElement = NULL;
+		nextNode = delNode->pLink;
 		free(delNode);
-		free(pStack);
-		free(nextNode);
-		nextNode = NULL;
-		delNode = NULL;
-		pStack = NULL;
+		delNode = nextNode;
 	}
+	free(pStack);
 }

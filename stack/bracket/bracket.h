@@ -20,27 +20,27 @@ typedef	struct BracketType
 	struct BracketType	*Link;
 } Bracket;
 
-typedef	struct StackType
+typedef	struct BracketStackType
 {
 	int		currentElementCount;
 	Bracket	*topNode;
-} Stack;
+} BracketStack;
 
-Stack	*createStack();
+BracketStack	*createBracketStack();
 
-Bracket	*popBracket(Stack *pStack);
-Bracket *peekBracket(Stack *pStack);
+Bracket	*popBracket(BracketStack *pBracketStack);
+Bracket *peekBracket(BracketStack *pBracketStack);
 
 t_type	verify_type(Bracket bracket);
 
-int		isStackEmpty(Stack *pStack);
-int		pushBracket(Stack *pStack, Bracket bracket);
+int		isBracketStackEmpty(BracketStack *pBracketStack);
+int		pushBracket(BracketStack *pBracketStack, Bracket bracket);
 
-int		find_bracket_pair(Stack *pStack, t_type type);
-void	displayStack(Stack *pStack);
-void	deleteStack(Stack *pStack);
+int		find_bracket_pair(BracketStack *pBracketStack, t_type type);
+void	displayBracketStack(BracketStack *pBracketStack);
+void	deleteBracketStack(BracketStack *pBracketStack);
 // additional
-void		NULLCHECK(void *ptr);
+int			NULLCHECK(void *ptr);
 int			SAME(int x, int y);
 int			ZERO(int x);
 #endif
@@ -50,4 +50,5 @@ int			ZERO(int x);
 
 #define TRUE		1
 #define FALSE		0
+#define ERROR		-1
 #endif

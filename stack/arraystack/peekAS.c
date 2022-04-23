@@ -4,9 +4,11 @@ StackNode	*peekAS(ArrayStack *pStack)
 {
 	StackNode	*topNode;
 
-	NULLCHECK(pStack);
+	if (NULLCHECK(pStack))
+		return (NULL);
 	topNode = calloc(1, sizeof(StackNode));
-	NULLCHECK(topNode);
+	if (NULLCHECK(topNode))
+		return (NULL);
 	if (isArrayStackEmpty(pStack))
 	{
 		printf("STACK IS NOW EMPTY\n");

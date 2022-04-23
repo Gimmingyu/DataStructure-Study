@@ -2,10 +2,13 @@
 
 int 		pushLS(LinkedStack *pStack, StackNode element)
 {
-	StackNode	*newNode = calloc(1, sizeof(StackNode));
+	StackNode	*newNode;
 
-	NULLCHECK(pStack);
-	NULLCHECK(newNode);
+	if (NULLCHECK(pStack))
+		return (ERROR);
+	newNode = calloc(1, sizeof(StackNode));
+	if (NULLCHECK(newNode))
+		return (ERROR);
 	newNode->data = element.data;
 	newNode->pLink = pStack->pTopElement;
 	pStack->pTopElement = newNode;

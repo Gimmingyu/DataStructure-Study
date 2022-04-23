@@ -28,7 +28,7 @@ int 		isLinkedStackEmpty(LinkedStack* pStack);
 
 // additional
 void		displayLinkedStack(LinkedStack *pStack);
-void		NULLCHECK(void *ptr);
+int			NULLCHECK(void *ptr);
 int			SAME(int x, int y);
 int			ZERO(int x);
 #endif
@@ -38,4 +38,5 @@ int			ZERO(int x);
 
 #define TRUE		1
 #define FALSE		0
+#define ERROR		-1
 #endif

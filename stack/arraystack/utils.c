@@ -1,15 +1,13 @@
 #include "arraystack.h"
 
-void	NULLCHECK(void *ptr)
+int	NULLCHECK(void *ptr)
 {
 	if (!ptr)
 	{
 		printf("null pointer exception\n");
-		system("leaks a.out > leaks_result; cat leaks_result | \
-        grep leaked && rm -rf leaks_result");
-		exit(1);
+		return (TRUE);
 	}
-	return ;
+	return (FALSE);
 }
 
 int	SAME(int x, int y)

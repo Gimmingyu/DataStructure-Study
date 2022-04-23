@@ -2,7 +2,8 @@
 
 StackNode	*peekLS(LinkedStack* pStack)
 {
-	NULLCHECK(pStack);
+	if (NULLCHECK(pStack))
+		return (NULL);
 	if (isLinkedStackEmpty(pStack))
 	{
 		printf("STACK IS NOW EMPTY\n");

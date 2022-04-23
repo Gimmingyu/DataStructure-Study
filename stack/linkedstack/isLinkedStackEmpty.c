@@ -2,6 +2,7 @@
 
 int	isLinkedStackEmpty(LinkedStack* pStack)
 {
-	NULLCHECK(pStack);
+	if (NULLCHECK(pStack))
+		return (ERROR);
 	return (pStack->currentElementCount == 0 ? TRUE : FALSE);
 }

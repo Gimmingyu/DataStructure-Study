@@ -2,9 +2,13 @@
 
 void	displayLinkedStack(LinkedStack *pStack)
 {
-	int	idx = pStack->currentElementCount;
-	StackNode	*topNode = pStack->pTopElement;
+	int	idx;
+	StackNode	*topNode;
 
+	if (NULLCHECK(pStack))
+		return ;
+	idx = pStack->currentElementCount;
+	topNode = pStack->pTopElement;
 	while (idx-- && topNode)
 	{
 		printf("topNode->data = '%c'\n", topNode->data);

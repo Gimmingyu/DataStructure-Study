@@ -5,9 +5,10 @@ int	pushAS(ArrayStack *pStack, StackNode element)
 	StackNode	*stack;
 	int			i = 0;
 
-	NULLCHECK(pStack);
+	if (NULLCHECK(pStack))
+		return (ERROR);
 	if (isArrayStackFull(pStack))
-		return (FALSE);
+		return (ERROR);
 	stack = pStack->pElement;
 	stack[pStack->currentElementCount].data = element.data;
 	pStack->currentElementCount++;

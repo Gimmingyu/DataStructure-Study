@@ -5,7 +5,8 @@ void	deleteArrayStack(ArrayStack *pStack)
 	StackNode	*bottomNode;
 	int	idx = 0;
 
-	NULLCHECK(pStack);
+	if (NULLCHECK(pStack))
+		return ;
 	bottomNode = pStack->pElement;
 	while (idx < pStack->maxElementCount)
 		bottomNode[idx++].data = 0;
