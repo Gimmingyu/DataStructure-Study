@@ -13,7 +13,7 @@ int	isOperator(char c)
 	return (FALSE);
 }
 
-int	operate_stack(LinkedStack *stack, char c)
+int	operateStack(LinkedStack *stack, char c)
 {
 	int	rtn;
 	int	a;
@@ -32,13 +32,13 @@ int	operate_stack(LinkedStack *stack, char c)
 	return (rtn);
 }
 
-// Oper가 우선순위가 높거나 같다 == False
-// Oper가 우선순위가 낮다. == True
+// Oper가 우선순위가 높다 == False == Oper를 스택에 넣는다 
+// Oper가 우선순위가 낮거나 같다. == True == topOper를 출력하고 Oper스택에 넣는다 ? 
 int	checkPriority(char topOper, char Oper)
 {
 	if (topOper == '*' || topOper == '/')
 	{
-		if (Oper == '-' || Oper == '+')
+		if ((Oper == '-' || Oper == '+') || (Oper == '*' || Oper == '/'))
 			return (TRUE);
 		else
 			return (FALSE);
@@ -83,7 +83,7 @@ int	checkBracketMatching(char *arr)
 		{
 			if (stack->currentElementCount < 2) //최소 2개가 있어야 연산가능
 				break;
-			node.data = operate_stack(stack, *arr);
+			node.data = operateStack(stack, *arr);
 			pushLS(stack, node);
 		}
 		else if (*arr != ' ')
@@ -101,11 +101,13 @@ int	checkBracketMatching(char *arr)
 int	fromInfixToPost(char *arr)
 {
 	LinkedStack	*OperStack;
-	StackNode	NumNode;
 	StackNode	OperNode;
 	StackNode	*topNode;
 	int			ret;
+	char		*newArr;
+	int			idx = 0;
 
+	newArr = calloc(strlen(arr), sizeof(char));
 	if (NULLCHECK(arr))
 		return (ERROR);
 	OperStack = createLinkedStack();
@@ -113,38 +115,29 @@ int	fromInfixToPost(char *arr)
 		return (ERROR);
 	while (*arr)
 	{
-		// 숫자이면 
 		if (INT(*arr))
 		{
-			// 숫자인 동안에 합쳐서 출력 
 			while (INT(*arr))
 			{
-				NumNode.data *= 10;
-				NumNode.data += *arr - '0';
+				newArr[idx++] = *arr;
 				arr++;
 			}
-			// 출력만 ? 
-			printf("%d ", NumNode.data);
-			NumNode.data = 0;
+			newArr[idx++] = ' ';
 		}
-		// 연산자면 
 		else if (isOperator(*arr))
 		{
 			OperNode.data = *arr;
-			// 비어있으면 그냥 push
 			if (isLinkedStackEmpty(OperStack))
 				pushLS(OperStack, OperNode);
 			else
 			{
-				// 맨위의 연산자와 우선순위 비교 
 				topNode = popLS(OperStack);
-				// True == 현재 들어온 연산자가 우선순위가 낮거나 같다. 
 				if (checkPriority(topNode->data, OperNode.data))
 				{
-					printf("%c ", topNode->data);
+					newArr[idx++] = topNode->data;
+					newArr[idx++] = ' ';
 					pushLS(OperStack, OperNode);
 				}
-				// False == 현재 들어온 연산자가 우선순위가 높다 
 				else
 				{
 					pushLS(OperStack, *topNode);
@@ -159,14 +152,16 @@ int	fromInfixToPost(char *arr)
 	while (OperStack->currentElementCount)
 	{
 		topNode = popLS(OperStack);
-		printf("%c ", topNode->data);
+		newArr[idx++] = topNode->data;
+		newArr[idx++] = ' ';
 	}
-	// printf("= %d\n", ret);
-	printf("\n");
-	ret = checkBracketMatching(arr);
+	newArr[idx] = 0x00;
+	ret = checkBracketMatching(newArr);
+	printf("%s= %d\n", newArr, ret);
 	return (ret);
 }
 
+// 2700
 int	main(void)
 {
 	char	arr1[] = "2 2 3 + 4 * - 2 /"; // (2 - (2 + 3) * 4 )/ 2 = -9
@@ -174,13 +169,16 @@ int	main(void)
 	char	arr3[] = "2 3 + -"; // 연산자가 많을때
 	char	arr4[] = "2 3 +a -"; // 잘못된 문자가 들어 있을때
 	char	arr5[] = "1"; // 숫자 하나일때
-	char	arr6[] = "20 + 30 * 90 / 70";
+	char	arr6[] = "2 + 3 * 9 / 7"; // 5 
+	// 20 + ((30 * 90) / 70)
+	// 20 30 90
+	// +  * /
 
 	printf("result %d\n", checkBracketMatching(arr1));
 	printf("result %d\n", checkBracketMatching(arr2));
 	printf("result %d\n", checkBracketMatching(arr3));
 	printf("result %d\n", checkBracketMatching(arr4));
 	printf("result %d\n", checkBracketMatching(arr5));
-	fromInfixToPost(arr6);
+	printf("result %d\n", fromInfixToPost(arr6));
 	return (0);
 }

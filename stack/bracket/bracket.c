@@ -175,6 +175,9 @@ void	deleteBracketStack(BracketStack *pBracketStack)
 	free(pBracketStack);
 }
 
+// char *arr = (a + b] * {c + d};
+
+
 int	main(void)
 {
 	BracketStack	*BracketStack = createBracketStack();
