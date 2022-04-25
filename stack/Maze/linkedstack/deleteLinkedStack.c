@@ -18,9 +18,3 @@ void 		deleteLinkedStack(LinkedStack *pStack)
 	}
 	free(pStack);
 }
-
-// 00000
-// 0000000
-// 00000
-// 00000
-// 00000
