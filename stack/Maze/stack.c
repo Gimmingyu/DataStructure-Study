@@ -26,6 +26,8 @@ int	pushLS(Stack *stack, MapNode node)
 		return (ERROR);
 	newNode->x = node.x;
 	newNode->y = node.y;
+	newNode->dist = node.dist;
+	newNode->func = node.func;
 	newNode->next = stack->pTopElement;
 	if (stack->currentElementCount == 0)
 		newNode->next = NULL;

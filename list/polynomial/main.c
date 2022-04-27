@@ -4,13 +4,13 @@
 int	main(void)
 {
 	LinkedList	*lst;
-	ListNode	*elem = malloc(sizeof(ListNode));
-	ListNode	*elem2 = malloc(sizeof(ListNode));
-	ListNode	*elem3 = malloc(sizeof(ListNode));
-	ListNode	*elem4 = malloc(sizeof(ListNode));
+	ListNode	*elem = malloc(0);
+	ListNode	*elem2 = malloc(0);
+	ListNode	*elem3 = malloc(0);
+	ListNode	*elem4 = malloc(0);
 	ListNode	*buf;
 	lst = createPolynomialList();
-	ListNode	*elem6 = malloc(sizeof(ListNode));
+	ListNode	*elem6 = malloc(0);
 	elem6->degree = 1;
 	elem6->coef = 1;
 	addPLElement(lst, *elem6);

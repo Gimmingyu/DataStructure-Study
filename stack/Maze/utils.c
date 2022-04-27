@@ -21,9 +21,9 @@ void	deleteMap(Map *map)
 {
 	if (NULLCHECK(map))
 		return ;
-	free(map->startNode);
-	free(map->endNode);
-	map->graph = NULL;
+	map->startNode = NULL;
+	map->endNode = NULL;
+	// map->graph = NULL;
 	free(map);
 }
 

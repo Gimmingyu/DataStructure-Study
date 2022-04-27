@@ -19,6 +19,8 @@ typedef struct NodeType
 {
 	int				x;
 	int				y;
+	int				dist;
+	void			*func;
 	struct NodeType *next;
 } MapNode;
 
@@ -38,25 +40,38 @@ typedef struct MapType
 } Map;
 
 typedef	int(*t_func)(MapNode *, Stack *, Map *);
+typedef int(*t_order)(Map *, MapNode **, Stack *, Direction *);
 
 Stack		*createStack();
 int			isStackEmpty(Stack *stack);
 int			pushLS(Stack *stack, MapNode node);
 MapNode		*popLS(Stack *stack);
+void		deleteLS(Stack *stack);
+
 Map			*createMap(int row, int column, char **graph, MapNode *startNode, MapNode *endNode);
-MapNode	*createMapNode();
+MapNode		*createMapNode();
 Direction	*createDirection();
-int	Go(Direction *dir, Map *map);
+
+int			Go(Map *map);
+
 Direction	*setDirection(Map *map);
-void	deleteLS(Stack *stack);
+void		assignFunc(Direction **Dir, Map *map);
+
+int	FIRST(Map *map, MapNode **node, Stack *stack, Direction *dir);
+int	SECOND(Map *map, MapNode **node, Stack *stack, Direction *dir);
+int	THIRD(Map *map, MapNode **node, Stack *stack, Direction	*dir);
+int	FOURTH(Map *map, MapNode **node, Stack *stack, Direction *dir);
+
 int			searchLeft(MapNode *node, Stack *stack, Map *map);
 int			searchRight(MapNode *node, Stack *stack, Map *map);
 int			searchUp(MapNode *node, Stack *stack, Map *map);
 int			searchDown(MapNode *node,Stack *stack,  Map *map);
-int	exceptionHandling(Map *map);
-void		assignFunc(Direction **Dir, Map *map);
-void	deleteMap(Map *map);
-void	displayPATH(MapNode	*topNode);
+
+
+void		deleteMap(Map *map);
+void		displayPATH(MapNode	*topNode);
+
+int			exceptionHandling(Map *map);
 int			NULLCHECK(void *ptr);
 #endif
 
