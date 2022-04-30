@@ -1,6 +1,6 @@
 #include "linkedstack.h"
 
-void 		deleteLinkedStack(LinkedStack *pStack)
+void	deleteLinkedStack(LinkedStack *pStack)
 {
 	int			idx;
 	StackNode	*delNode;
@@ -18,9 +18,3 @@ void 		deleteLinkedStack(LinkedStack *pStack)
 	}
 	free(pStack);
 }
-
-// 00000
-// 0000000
-// 00000
-// 00000
-// 00000
