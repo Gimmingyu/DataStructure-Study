@@ -10,31 +10,7 @@ LinkedQueue	*createLinkedQueue()
 	return (newQueue);
 }
 
-int 		insertFrontLQ(LinkedQueue* pQueue, QueueNode element)
-{
-	QueueNode	*newNode;
-
-	if (NULLCHECK(pQueue))
-		return (ERR);
-	newNode = calloc(1, sizeof(QueueNode));
-	if (NULLCHECK(newNode))
-		return (ERR);
-	newNode->data = element.data;
-	if (isLinkedQueueEmpty(pQueue))
-	{
-		pQueue->pFrontNode = newNode;
-		pQueue->pRearNode = newNode;
-	}
-	else
-	{
-		newNode->pRLink = pQueue->pFrontNode;
-		pQueue->pFrontNode = newNode;
-	}
-	pQueue->currentElementCount++;
-	return (TRUE);
-}
-
-int 		insertRearLQ(LinkedQueue* pQueue, QueueNode element)
+int	insertLQ(LinkedQueue* pQueue, QueueNode element)
 {
 	QueueNode	*newNode;
 
@@ -58,7 +34,7 @@ int 		insertRearLQ(LinkedQueue* pQueue, QueueNode element)
 	return (TRUE);
 }
 
-QueueNode	*deleteFrontLQ(LinkedQueue* pQueue)
+QueueNode	*deleteLQ(LinkedQueue* pQueue)
 {
 	QueueNode	*delNode;
 
@@ -71,44 +47,6 @@ QueueNode	*deleteFrontLQ(LinkedQueue* pQueue)
 	}
 	delNode = pQueue->pFrontNode;
 	pQueue->pFrontNode = delNode->pRLink;
-	return (delNode);
-}
-
-QueueNode	*deleteRearLQ(LinkedQueue* pQueue)
-{
-	QueueNode	*rearNode;
-	QueueNode	*delNode;
-	int			idx;
-
-	if (NULLCHECK(pQueue))
-		return (NULL);
-	if (isLinkedQueueEmpty(pQueue))
-	{
-		printf("Queue is now empty\n");
-		return (NULL);
-	}
-	// 1인경우
-	// 큐의 레어노드는 프론트노드와 같음.
-	// 큐의 양쪽 노드 초기화 해주고 리턴.
-	// 2인경우
-	// idx = 1이므로 rearNode는 frontNode가 되어야한다.
-	if (pQueue->currentElementCount == 1)
-	{
-		delNode = pQueue->pRearNode;
-		pQueue->pFrontNode = NULL;
-		pQueue->pRearNode = NULL;
-	}
-	else
-	{
-		rearNode = pQueue->pFrontNode;
-		idx = pQueue->currentElementCount - 1;
-		while (idx - 1 > 0)
-			rearNode = rearNode->pRLink;
-		delNode = rearNode->pRLink;
-		pQueue->pRearNode = rearNode;
-		rearNode->pRLink = NULL;
-	}
-	pQueue->currentElementCount--;
 	return (delNode);
 }
 
@@ -133,7 +71,7 @@ void 		deleteLinkedQueue(LinkedQueue* pQueue)
 		return ;
 
 	delNode = pQueue->pFrontNode;
-	while (pQueue->currentElementCount--)
+	while (delNode && pQueue->currentElementCount--)
 	{
 		nextNode = delNode->pRLink;
 		free(delNode);
@@ -167,50 +105,72 @@ int	main(void)
 
 	QueueNode	node1;
 	node1.data = 'A';
-	insertFrontLQ(lst, node1);
+	insertLQ(lst, node1);
 	displayLinkedQueue(lst);
 	printf("================================================\n");
 
 	QueueNode	node2;
 	node2.data = 'B';
-	insertRearLQ(lst, node2);
+	insertLQ(lst, node2);
 	displayLinkedQueue(lst);
 	printf("================================================\n");
 
 	QueueNode	node3;
 	node3.data = 'C';
-	insertFrontLQ(lst, node3);
+	insertLQ(lst, node3);
 	displayLinkedQueue(lst);
 	printf("================================================\n");
 
 	QueueNode	node4;
 	node4.data = 'D';
-	insertRearLQ(lst, node4);
+	insertLQ(lst, node4);
 	displayLinkedQueue(lst);
 	printf("================================================\n");
 
 	QueueNode	node5;
 	node5.data = 'E';
-	insertRearLQ(lst, node5);
+	insertLQ(lst, node5);
 	displayLinkedQueue(lst);
 	printf("================================================\n");
 
 	printf("now delete!!\n");
-	deleteRearLQ(lst);
+	QueueNode	*temp;
+	temp = deleteLQ(lst);
+	printf("temp's data = %c\n", temp->data);
+	free(temp);
 	displayLinkedQueue(lst);
 	printf("================================================\n");
 
-	deleteRearLQ(lst);
+	temp = deleteLQ(lst);
+	printf("temp's data = %c\n", temp->data);
+	free(temp);
 	displayLinkedQueue(lst);
 	printf("================================================\n");
 
-	deleteFrontLQ(lst);
+	temp = deleteLQ(lst);
+	printf("temp's data = %c\n", temp->data);
+	free(temp);
 	displayLinkedQueue(lst);
 	printf("================================================\n");
 
 
+	temp = deleteLQ(lst);
+	printf("temp's data = %c\n", temp->data);
+	free(temp);
+	displayLinkedQueue(lst);
+	printf("================================================\n");
+
+
+	temp = deleteLQ(lst);
+	printf("temp's data = %c\n", temp->data);
+	free(temp);
+	displayLinkedQueue(lst);
+	printf("================================================\n");
+
+	printf("success!\n");
 	deleteLinkedQueue(lst);
 	
-	system("leaks a.out");
+	system("leaks a.out > leaks_result; cat leaks_result | \
+        grep leaked && rm -rf leaks_result");
 	return (0);
 }

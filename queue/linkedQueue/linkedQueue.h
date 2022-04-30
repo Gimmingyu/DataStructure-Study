@@ -26,13 +26,11 @@ typedef struct LinkedQueueType
 
 LinkedQueue	*createLinkedQueue();
 
-int 		insertFrontLD(LinkedQueue* pQueue, QueueNode element);
-int 		insertRearLD(LinkedQueue* pQueue, QueueNode element);
+int 		insertLQ(LinkedQueue* pQueue, QueueNode element);
 
-QueueNode	*deleteFrontLD(LinkedQueue* pQueue);
-QueueNode	*deleteRearLD(LinkedQueue* pQueue);
-QueueNode	*peekFrontLD(LinkedQueue* pQueue);
-QueueNode	*peekRearLD(LinkedQueue* pQueue);
+QueueNode	*deleteLQ(LinkedQueue* pQueue);
+QueueNode	*peekFrontLQ(LinkedQueue* pQueue);
+QueueNode	*peekRearLQ(LinkedQueue* pQueue);
 
 void 		deleteLinkedQueue(LinkedQueue* pQueue);
 

@@ -24,13 +24,10 @@ int insertFrontLD(LinkedDeque* pDeque, DequeNode element)
 	{
 		pDeque->pFrontNode = newNode;
 		pDeque->pRearNode = newNode;
-		newNode->pLLink = NULL;
-		newNode->pRLink = NULL;
 	}
 	else
 	{
 		newNode->pRLink = pDeque->pFrontNode;
-		newNode->pLLink = NULL;
 		pDeque->pFrontNode->pLLink = newNode;
 		pDeque->pFrontNode = newNode;
 	}
