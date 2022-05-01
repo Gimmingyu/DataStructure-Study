@@ -60,7 +60,7 @@ QueueNode	*peekRearLQ(LinkedQueue* pQueue)
 	return (pQueue->pRearNode);
 }
 
-void 	deleteLinkedQueue(LinkedQueue* pQueue)
+void 		deleteLinkedQueue(LinkedQueue* pQueue)
 {
 	QueueNode	*delNode;
 	QueueNode	*nextNode;
@@ -80,7 +80,7 @@ void 	deleteLinkedQueue(LinkedQueue* pQueue)
 	free(pQueue);
 }
 
-int	isLinkedQueueEmpty(LinkedQueue* pQueue)
+int 		isLinkedQueueEmpty(LinkedQueue* pQueue)
 {
 	return (pQueue->currentElementCount == 0 ? TRUE : FALSE);
 }
