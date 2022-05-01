@@ -88,3 +88,10 @@ int *pServiceUserCount, int *pTotalWaitTime)
 	return (NULL);
 }
 
+void	printSimCustomer(int currentTime, SimCustomer customer)
+{
+	printf("current Time = %d\n");
+	printf("Customer has arrived :%d\n", customer.arrivalTime);
+	pritnf("Required Service Time :%d\n", customer.serviceTime);
+	printf("")
+}
