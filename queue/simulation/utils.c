@@ -46,6 +46,7 @@ QueueNode	*deleteLQ(LinkedQueue* pQueue)
 	}
 	delNode = pQueue->pFrontNode;
 	pQueue->pFrontNode = delNode->pRLink;
+	pQueue->currentElementCount--;
 	return (delNode);
 }
 
@@ -83,4 +84,28 @@ void	deleteLinkedQueue(LinkedQueue* pQueue)
 int isLinkedQueueEmpty(LinkedQueue* pQueue)
 {
 	return (pQueue->currentElementCount == 0 ? TRUE : FALSE);
+}
+
+int	NULLCHECK(void *ptr)
+{
+	if (!ptr)
+	{
+		printf("NULL pointer exception\n");
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+void	displayLinkedQueue(LinkedQueue	*q)
+{
+	QueueNode	*node;
+	QueueNode	*nextNode;
+
+	node = q->pFrontNode;
+	while (node)
+	{
+		nextNode = node->pRLink;
+		printf("arrival Time = %d\n", node->customerData->arrivalTime);
+		node = nextNode;
+	}
 }

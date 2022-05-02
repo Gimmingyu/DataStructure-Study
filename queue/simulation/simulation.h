@@ -61,6 +61,7 @@ QueueNode	*peekFrontLQ(LinkedQueue* pQueue);
 QueueNode	*peekRearLQ(LinkedQueue* pQueue);
 void	deleteLinkedQueue(LinkedQueue* pQueue);
 int isLinkedQueueEmpty(LinkedQueue* pQueue);
-
+void	displayLinkedQueue(LinkedQueue	*q);
+int	NULLCHECK(void *ptr);
 #endif
 
