@@ -135,18 +135,18 @@ int main(void)
 
 	int	totalWaitTime = 0;
 	int	serviceUserCount = 0;
-	QueueNode *servicing = NULL;
+	QueueNode *agent = NULL;
 	while (currentTime < endTime)
 	{
 		processArrival(currentTime, arrivalQ, waitQ);
-		if (servicing && servicing->customerData->endTime <= currentTime)
+		if (agent && agent->customerData->endTime <= currentTime)
 		{
-			servicing = processServiceNodeEnd(currentTime, servicing, &serviceUserCount, &totalWaitTime);
-			free(servicing);
-			servicing = NULL;
+			agent = processServiceNodeEnd(currentTime, agent, &serviceUserCount, &totalWaitTime);
+			free(agent);
+			agent = NULL;
 		}
-		if (servicing == NULL)
-			servicing = processServiceNodeStart(currentTime, waitQ);
+		if (agent == NULL)
+			agent = processServiceNodeStart(currentTime, waitQ);
 		printWaitQueueStatus(currentTime, waitQ);
 		currentTime++;
 	}
