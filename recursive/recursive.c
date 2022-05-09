@@ -60,12 +60,6 @@ void	hanoi_tower(int n, int from, int to, int temp)
 	}
 }
 
-// void	hanoi_tower_iter(int n, char from, char to, char temp)
-// {
-
-// }
-
-
 int	main(void)
 {
 	int	t = 5;

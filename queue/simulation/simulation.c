@@ -151,5 +151,6 @@ int main(void)
 		currentTime++;
 	}
 	printReport(waitQ, serviceUserCount, totalWaitTime);
+	agent->customerData->status;
 	return (0);
 }
