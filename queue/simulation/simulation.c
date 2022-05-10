@@ -1,4 +1,4 @@
-#include "simulation.h"
+#include "./simulation.h"
 
 void	insertCustomer(int arrivalTime, int processTime, LinkedQueue *pQueue)
 {
