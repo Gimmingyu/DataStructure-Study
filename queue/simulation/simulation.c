@@ -7,16 +7,8 @@ void	insertCustomer(int arrivalTime, int processTime, LinkedQueue *pQueue)
 
 	if (NULLCHECK(pQueue))
 		return ;
-
 	newCustomer = calloc(1, sizeof(SimCustomer));
-	if (!newCustomer)
-		return ;
 	newNode = calloc(1, sizeof(QueueNode));
-	if (!newNode)
-	{
-		free(newCustomer);
-		return ;
-	}
 	newCustomer->arrivalTime = arrivalTime;
 	newCustomer->serviceTime = processTime;
 	newCustomer->status = arrival;
@@ -38,12 +30,13 @@ void	processArrival(int currentTime, LinkedQueue *pArrivalQueue, LinkedQueue *pW
 {
 	QueueNode	*frontNode;
 
-	if (!pArrivalQueue || !pWaitQueue || isLinkedQueueEmpty(pArrivalQueue))
+	if (NULLCHECK(pArrivalQueue) || NULLCHECK(pWaitQueue) || isLinkedQueueEmpty(pArrivalQueue))
 		return ;
 	while (pArrivalQueue->pFrontNode->customerData->arrivalTime <= currentTime)
 	{
 		frontNode = deleteLQ(pArrivalQueue);
 		insertLQ(pWaitQueue, *frontNode);
+		printSimCustomer(currentTime, *(frontNode->customerData));
 		free(frontNode);
 		if (isLinkedQueueEmpty(pArrivalQueue))
 			break ;
@@ -55,7 +48,7 @@ QueueNode	*processServiceNodeStart(int currentTime, LinkedQueue *pWaitQueue)
 	QueueNode	*frontNode;
 	SimCustomer	*customer;
 
-	if (!pWaitQueue || isLinkedQueueEmpty(pWaitQueue))
+	if (NULLCHECK(pWaitQueue) || isLinkedQueueEmpty(pWaitQueue))
 		return (NULL);
 	if (currentTime < pWaitQueue->pFrontNode->customerData->arrivalTime)
 		return (NULL);
@@ -66,6 +59,7 @@ QueueNode	*processServiceNodeStart(int currentTime, LinkedQueue *pWaitQueue)
 	customer->status = start;
 	pWaitQueue->pFrontNode = frontNode->pRLink;
 	pWaitQueue->currentElementCount--;
+	printSimCustomer(currentTime, *customer);
 	return (frontNode);
 }
 
@@ -74,10 +68,13 @@ QueueNode	*processServiceNodeEnd(int currentTime, QueueNode *pServiceNode, int *
 	QueueNode	*frontNode;
 	SimCustomer	*customer;
 
+	if (NULLCHECK(pServiceNode))
+		return (NULL);
 	customer = pServiceNode->customerData;
 	*pServiceUserCount += 1;
 	*pTotalWaitTime += customer->startTime - customer->arrivalTime;
 	customer->status = end;
+	printSimCustomer(currentTime, *customer);
 	return (pServiceNode);
 }
 
@@ -87,6 +84,12 @@ void	printSimCustomer(int currentTime, SimCustomer customer)
 	printf("Customer has arrived :%d\n", customer.arrivalTime);
 	printf("Required Service Time :%d\n", customer.serviceTime);
 	printf("Customer waited for %d\n", currentTime - customer.arrivalTime);
+	if (customer.status == start)
+		printf("Customer status : start\n");
+	else if (customer.status == arrival)
+		printf("Customer status : arrival\n");
+	else
+		printf("Customer status : end\n");
 	printf("========================================\n");
 }
 
@@ -101,18 +104,17 @@ void	printWaitQueueStatus(int currentTime, LinkedQueue *pWaitQueue)
 		return ;
 	}
 	printf("Waiting Queue\n");
-	printf("========================================\n");
-	frontNode = pWaitQueue->pFrontNode;
-	while (frontNode)
-	{
-		printSimCustomer(currentTime, *(frontNode->customerData));
-		frontNode = frontNode->pRLink;
-	}
+	printf("Waiting customer number : %d\n", pWaitQueue->currentElementCount);
 }
 
 void	printReport(LinkedQueue *pWaitQueue, int serviceUserCount, int totalWaitTime)
 {
-	displayLinkedQueue(pWaitQueue);
+	if (isLinkedQueueEmpty(pWaitQueue))
+	{
+		printf("Wait List is Empty\n");
+		return ;
+	}
+	printf("Waiting customer number : %d\n", pWaitQueue->currentElementCount);
 	printf("service User Count = %d\n", serviceUserCount);
 	printf("total wait time = %d\n", totalWaitTime);
 }
@@ -129,14 +131,14 @@ int main(void)
 	insertCustomer(1, 2, arrivalQ); 
 	insertCustomer(4, 1, arrivalQ); 
 	insertCustomer(5, 1, arrivalQ); 
-	insertCustomer(7, 0, arrivalQ); 
+	insertCustomer(7, 1, arrivalQ); 
 	insertCustomer(10, 2, arrivalQ);
 	insertCustomer(12, 3, arrivalQ);
 
 	int	totalWaitTime = 0;
 	int	serviceUserCount = 0;
 	QueueNode *agent = NULL;
-	while (currentTime < endTime)
+	while (currentTime <= endTime)
 	{
 		processArrival(currentTime, arrivalQ, waitQ);
 		if (agent && agent->customerData->endTime <= currentTime)
@@ -148,9 +150,9 @@ int main(void)
 		if (agent == NULL)
 			agent = processServiceNodeStart(currentTime, waitQ);
 		printWaitQueueStatus(currentTime, waitQ);
+		printf("========================================\n");
 		currentTime++;
 	}
 	printReport(waitQ, serviceUserCount, totalWaitTime);
-	agent->customerData->status;
 	return (0);
 }
