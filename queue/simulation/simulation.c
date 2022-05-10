@@ -90,7 +90,7 @@ void	printSimCustomer(int currentTime, SimCustomer customer)
 		printf("Customer status : arrival\n");
 	else
 		printf("Customer status : end\n");
-	printf("========================================\n");
+	printf("==========================================\n");
 }
 
 void	printWaitQueueStatus(int currentTime, LinkedQueue *pWaitQueue)
