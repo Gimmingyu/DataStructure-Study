@@ -110,10 +110,7 @@ void	printWaitQueueStatus(int currentTime, LinkedQueue *pWaitQueue)
 void	printReport(LinkedQueue *pWaitQueue, int serviceUserCount, int totalWaitTime)
 {
 	if (isLinkedQueueEmpty(pWaitQueue))
-	{
 		printf("Wait List is Empty\n");
-		return ;
-	}
 	printf("Waiting customer number : %d\n", pWaitQueue->currentElementCount);
 	printf("service User Count = %d\n", serviceUserCount);
 	printf("total wait time = %d\n", totalWaitTime);
