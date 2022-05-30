@@ -74,6 +74,7 @@ int addEdgewithWeightLG(LinkedGraph *pGraph, int fromVertexID, int toVertexID, i
 		fromNode.data.weight = weight;
 		addLLElement(toList, toList->currentElementCount, fromNode);
 	}
+	// printf("here\n");
 	return (TRUE);
 }
 

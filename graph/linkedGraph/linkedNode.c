@@ -35,6 +35,7 @@ int addLLElement(LinkedList *pList, int position, ListNode element)
 		newNode->pLink = prev->pLink;
 		prev->pLink = newNode;
 	}
+	pList->currentElementCount++;
 	return (TRUE);
 }
 
