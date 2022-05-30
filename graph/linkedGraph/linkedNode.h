@@ -1,5 +1,5 @@
-#ifndef _LINKEDGRAPH_
-#define _LINKEDGRAPH_
+#ifndef _LINKEDNODE_
+#define _LINKEDNODE_
 
 #include <stdio.h>
 #include <unistd.h>

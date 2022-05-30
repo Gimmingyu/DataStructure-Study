@@ -1,16 +1,16 @@
-#include "linkedGraph.h"
+#include "linkedNode.h"
 
 LinkedList *createLinkedList()
 {
-	return (LinkedList *)calloc(sizeof(LinkedList), 1);
+	return ((LinkedList *)calloc(sizeof(LinkedList), 1));
 }
 
 ListNode	*createNode(ListNode element)
 {
 	ListNode	*newNode = calloc(1, sizeof(ListNode));
 
-	newNode = calloc(1, sizeof(ListNode));
 	newNode->data = element.data;
+	return (newNode);
 }
 
 int addLLElement(LinkedList *pList, int position, ListNode element)
@@ -21,7 +21,7 @@ int addLLElement(LinkedList *pList, int position, ListNode element)
 	ListNode	*prev;
 	ListNode	*next;
 
-	if (!pList || position < 0 || position >= pList->currentElementCount)
+	if (!pList || position < 0 || position > pList->currentElementCount)
 		return (FALSE);
 	newNode = createNode(element);
 	if (position == 0)
