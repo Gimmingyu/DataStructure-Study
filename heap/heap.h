@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "./kruskal.h"
 
 typedef enum HeapType
 {
@@ -21,7 +22,7 @@ typedef struct HeapArray
 {
 	int 		currentElementCount;
 	int			maxElementCount;
-	int 		*pElement;
+	Edge 		*pElement;
 	HeapType	type;
 } Heap;
 
